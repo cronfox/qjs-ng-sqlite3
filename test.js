@@ -1,9 +1,9 @@
 /* test.js
  */
 
-import * as std from "std";
-import * as os from "os";
-import { sqlite3_db } from "./sqlite3.so";
+import * as std from "qjs:std";
+import * as os from "qjs:os";
+import { sqlite3_db } from "quickjs_sqlite3.dll";
 
 console.log("sqlite3 test");
 

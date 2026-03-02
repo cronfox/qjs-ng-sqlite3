@@ -6,7 +6,11 @@
  * https://www.sqlite.org/c3ref/funclist.html                         *
  *                                                                    *
  **********************************************************************/
-
+#if defined(_WIN32) || defined(_MSC_VER)
+    #define DLL_EXPORT __declspec(dllexport)
+#else
+    #define DLL_EXPORT __attribute__((visibility("default")))
+#endif
 #define _GNU_SOURCE
 #include <stdio.h>
 #include <stdlib.h>
@@ -365,7 +369,8 @@ static JSValue st_column_value(JSContext *ctx, JSValueConst this_val,
     return JS_EXCEPTION;
 }
 
-static inline JS_BOOL JS_IsInteger(JSValueConst v) {
+/* JS_BOOL was removed in QuickJS-NG; JS_IsInteger is not exported either */
+static inline int JS_IsInteger(JSValueConst v) {
     int tag = JS_VALUE_GET_TAG(v);
     return tag == JS_TAG_INT || tag == JS_TAG_BIG_INT;
 }
@@ -456,7 +461,7 @@ static JSClassDef st_class = {
 
 static int st_init(JSContext *ctx, JSModuleDef *m) {
     JSValue proto;
-    JS_NewClassID(&st_class_id);
+    JS_NewClassID(JS_GetRuntime(ctx), &st_class_id);
     JS_NewClass(JS_GetRuntime(ctx), st_class_id, &st_class);
     proto = JS_NewObject(ctx);
     JS_SetPropertyFunctionList(ctx, proto, st_proto_funcs,
@@ -468,7 +473,7 @@ static int st_init(JSContext *ctx, JSModuleDef *m) {
 static int db_init(JSContext *ctx, JSModuleDef *m) {
     JSValue proto, class;
     st_init(ctx, m);
-    JS_NewClassID(&db_class_id);
+    JS_NewClassID(JS_GetRuntime(ctx), &db_class_id);
     JS_NewClass(JS_GetRuntime(ctx), db_class_id, &db_class);
     proto = JS_NewObject(ctx);
     JS_SetPropertyFunctionList(ctx, proto, db_proto_funcs,
@@ -487,7 +492,7 @@ static int db_init(JSContext *ctx, JSModuleDef *m) {
 #define JS_INIT_MODULE js_init_module_sqlite3
 #endif
 
-JSModuleDef *JS_INIT_MODULE(JSContext *ctx, const char *module_name) {
+DLL_EXPORT JSModuleDef *JS_INIT_MODULE(JSContext *ctx, const char *module_name) {
     JSModuleDef *m;
     m = JS_NewCModule(ctx, module_name, db_init);
     if (!m)
