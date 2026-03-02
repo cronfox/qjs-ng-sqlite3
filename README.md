@@ -2,10 +2,10 @@ qjs-sqlite3
 ===========
 
 ## What is it? ##
-**qjs-sqlite3** is a simple interface to sqlite3 from quickjs
-<https://bellard.org/quickjs/>.
+**qjs-sqlite3** is a simple interface to sqlite3 from quickjs-ng
+<https://github.com/quickjs-ng/quickjs>.
 
-This has only been run on Linux x86_64 (Fedora 31).
+This has only been run on Windows 11.
 
 See test.js for simple example and testing.
 
