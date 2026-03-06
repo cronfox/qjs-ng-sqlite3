@@ -1,7 +1,5 @@
 Copyright (c) 2020 Fred Weigel
-Copyright (c) 2026- Cronfox
-Fred Weigel
-Cronfox
+Copyright (c) 2026- Cronfox、
 
 Permission is hereby granted, free of charge, to any person
 obtaining a copy of this software and associated documentation
