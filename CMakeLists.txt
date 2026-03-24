@@ -1,6 +1,6 @@
 
 # QuickJS SQLite3 binding
-add_library(quickjs_sqlite3 STATIC sqlite3.c)
+add_library(quickjs_sqlite3 SHARED sqlite3.c)
 target_compile_definitions(quickjs_sqlite3 PUBLIC JS_SHARED_LIBRARY)
 target_include_directories(quickjs_sqlite3 PRIVATE
     ${quickjs_SOURCE_DIR}                       
